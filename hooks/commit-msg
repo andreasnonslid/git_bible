@@ -6,21 +6,34 @@ commit_msg_file=$1
 commit_msg=$(head -n 1 "$commit_msg_file")
 
 # Define the regex for validation
-regex="^[a-z]{1,5}: [A-Z0-9!@#\$%^&*()_+].{0,48}$"
+regex="^(feat|fix|test|docs|refactor|chore|style|perf|ci|build): [A-Z0-9!@#\$%^&*()_+].{0,48}$"
 
 # Validate the commit message
 if [[ ! "$commit_msg" =~ $regex ]]; then
     echo "Error: Invalid commit message format."
     echo
     echo "Commit message must follow these rules:"
-    echo "  1. Start with lowercase letters only (max 5 characters), followed by ': '."
-    echo "  2. The first character after ': ' must be a capital letter, number, or symbol."
-    echo "  3. The subject (first line) must not exceed 50 characters."
+    echo "  1. Start with one of the following prefixes:"
+    echo "     feat: A new feature."
+    echo "     fix: A bug fix."
+    echo "     test: Adding or fixing tests."
+    echo "     docs: Documentation updates."
+    echo "     refactor: Code changes that neither fix bugs nor add features."
+    echo "     chore: Changes to auxiliary tasks or maintenance (e.g., build scripts)."
+    echo "     style: Changes that don't affect functionality, like formatting."
+    echo "     perf: Performance improvements."
+    echo "     ci: Changes to CI/CD configuration."
+    echo "     build: Changes to build system or external dependencies."
     echo
-    echo "Example of valid commit messages:"
+    echo "  2. Follow the prefix with ': ' (a colon and space)."
+    echo "  3. The first character after ': ' must be a capital letter, number, or symbol."
+    echo "  4. The subject (first line) must not exceed 50 characters."
+    echo
+    echo "Examples of valid commit messages:"
     echo "  feat: Add new feature"
-    echo "  fix: Resolve issue #123"
-    echo "  test: Ensure edge cases pass"
+    echo "  fix: Resolve bug #123"
+    echo "  docs: Update README"
+    echo "  refactor: Improve performance"
     echo
     echo "Your commit message was: \"$commit_msg\""
     exit 1
