@@ -3,7 +3,9 @@
 # Git Bible
 
 A comprehensive system for managing Git states and workflows.
+
 **Usage**: Source this file or execute specific functions directly.
+
 **Author**: Andreas Nonslid Håvardsen
 
 The following is variables used for several parts of this config, and should be changed per person.
