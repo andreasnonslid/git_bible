@@ -1,0 +1,30 @@
+#!/bin/bash
+# hooks/commit-msg: Enforce commit message style
+
+# Get the commit message file
+commit_msg_file=$1
+commit_msg=$(head -n 1 "$commit_msg_file")
+
+# Define the regex for validation
+regex="^[a-z]{1,5}: [A-Z0-9!@#\$%^&*()_+].{0,48}$"
+
+# Validate the commit message
+if [[ ! "$commit_msg" =~ $regex ]]; then
+    echo "Error: Invalid commit message format."
+    echo
+    echo "Commit message must follow these rules:"
+    echo "  1. Start with lowercase letters only (max 5 characters), followed by ': '."
+    echo "  2. The first character after ': ' must be a capital letter, number, or symbol."
+    echo "  3. The subject (first line) must not exceed 50 characters."
+    echo
+    echo "Example of valid commit messages:"
+    echo "  feat: Add new feature"
+    echo "  fix: Resolve issue #123"
+    echo "  test: Ensure edge cases pass"
+    echo
+    echo "Your commit message was: \"$commit_msg\""
+    exit 1
+fi
+
+echo "Commit message format is valid."
+exit 0

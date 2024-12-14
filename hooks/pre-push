@@ -1,0 +1,16 @@
+#!/bin/bash
+echo "Running pre-push checks..."
+
+# Run Python tests
+if ! pytest; then
+    echo "Python tests failed. Aborting push."
+    exit 1
+fi
+
+# Run Bash tests
+if ! bash ./tests/shell/test_bible.sh; then
+    echo "Bash tests failed. Aborting push."
+    exit 1
+fi
+
+echo "All tests passed. Proceeding with push."
